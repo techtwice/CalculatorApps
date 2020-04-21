@@ -9,9 +9,11 @@ import android.widget.Toast as Toast
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    var op = ""
-    var oldNumber = ""
-    var isNewOp = true
+    private var btClickValue = ""
+    private var op = ""
+    private var oldNumber = ""
+    private var newNumber = ""
+    private var isNewOp = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +39,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btEqual.setOnClickListener(this)
         btClean.setOnClickListener(this)
 
+
     }
 
     override fun onClick(view: View) {
@@ -47,64 +50,84 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         isNewOp = false
 
         val btSelect = view as Button
-        var btClickValue: String = etShowNumber.text.toString()
+        btClickValue = etShowNumber.text.toString()
 
         when (btSelect.id) {
             bt0.id -> {
                 btClickValue += "0"
+                displayClickValue()
             }
             bt1.id -> {
                 btClickValue += "1"
+                displayClickValue()
             }
             bt2.id -> {
                 btClickValue += "2"
+                displayClickValue()
             }
             bt3.id -> {
                 btClickValue += "3"
+                displayClickValue()
             }
             bt4.id -> {
                 btClickValue += "4"
+                displayClickValue()
             }
             bt5.id -> {
                 btClickValue += "5"
+                displayClickValue()
             }
             bt6.id -> {
                 btClickValue += "6"
+                displayClickValue()
             }
             bt7.id -> {
                 btClickValue += "7"
+                displayClickValue()
             }
             bt8.id -> {
                 btClickValue += "8"
+                displayClickValue()
             }
             bt9.id -> {
                 btClickValue += "9"
+                displayClickValue()
             }
             btDot.id -> {
                 //TODO: prevent adding more than 1 dot
                 btClickValue += "."
+                displayClickValue()
             }
             btPlusMins.id -> {
                 btClickValue = "-$btClickValue"
+                displayClickValue()
             }
             btMul.id -> {
                 op = "*"
                 operationEvent()
+                btClickValue += "*"
+                displayClickValue()
                 return
             }
             btDiv.id -> {
                 op = "/"
                 operationEvent()
+                btClickValue += "/"
+                displayClickValue()
                 return
             }
             btSub.id -> {
                 op = "-"
                 operationEvent()
+                btClickValue += "-"
+                displayClickValue()
                 return
             }
             btSum.id -> {
                 op = "+"
                 operationEvent()
+                btClickValue += "+"
+                displayClickValue()
                 return
             }
             btPercent.id -> {
@@ -123,16 +146,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
         }
 
+    }
+
+    private fun displayClickValue() {
         etShowNumber.setText(btClickValue)
     }
 
     private fun operationEvent() {
         oldNumber = etShowNumber.text.toString()
-        isNewOp = true
+        //   isNewOp = true
+        Toast.makeText(this, "oldNumber: $oldNumber", Toast.LENGTH_SHORT).show()
     }
 
     private fun equalEvent() {
-        val newNumber = etShowNumber.text.toString()
+        newNumber = etShowNumber.text.toString()
         var finalNumber: Double? = null
 
         when (op) {
@@ -152,11 +179,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         etShowNumber.setText(finalNumber.toString())
-        isNewOp=true
+        isNewOp = true
     }
 
     private fun cleanShowNumber() {
-        Toast.makeText(this, "cleanShowNumber", Toast.LENGTH_SHORT).show()
+        // Toast.makeText(this, "cleanShowNumber", Toast.LENGTH_SHORT).show()
         etShowNumber.setText("0")
         isNewOp = true
     }
