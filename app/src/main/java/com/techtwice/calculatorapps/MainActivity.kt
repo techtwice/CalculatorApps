@@ -37,10 +37,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btEqual.setOnClickListener(this)
         btClean.setOnClickListener(this)
 
-
     }
 
     override fun onClick(view: View) {
+
+        if (isNewOp) {
+            etShowNumber.setText("")
+        }
+        isNewOp = false
 
         val btSelect = view as Button
         var btClickValue: String = etShowNumber.text.toString()
@@ -85,15 +89,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             btMul.id -> {
                 op = "*"
+                operationEvent()
+                return
             }
             btDiv.id -> {
                 op = "/"
+                operationEvent()
+                return
             }
             btSub.id -> {
                 op = "-"
+                operationEvent()
+                return
             }
             btSum.id -> {
                 op = "+"
+                operationEvent()
+                return
             }
             btPercent.id -> {
                 val percentNumber: Double = etShowNumber.text.toString().toDouble() / 100
@@ -102,17 +114,45 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 return
             }
             btEqual.id -> {
-
+                equalEvent()
+                return
             }
             R.id.btClean -> {
                 cleanShowNumber()
                 return
             }
-
         }
 
         etShowNumber.setText(btClickValue)
+    }
 
+    private fun operationEvent() {
+        oldNumber = etShowNumber.text.toString()
+        isNewOp = true
+    }
+
+    private fun equalEvent() {
+        val newNumber = etShowNumber.text.toString()
+        var finalNumber: Double? = null
+
+        when (op) {
+
+            "*" -> {
+                finalNumber = oldNumber.toDouble() * newNumber.toDouble()
+            }
+            "/" -> {
+                finalNumber = oldNumber.toDouble() / newNumber.toDouble()
+            }
+            "+" -> {
+                finalNumber = oldNumber.toDouble() + newNumber.toDouble()
+            }
+            "-" -> {
+                finalNumber = oldNumber.toDouble() * newNumber.toDouble()
+            }
+        }
+
+        etShowNumber.setText(finalNumber.toString())
+        isNewOp=true
     }
 
     private fun cleanShowNumber() {

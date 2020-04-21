@@ -20,9 +20,9 @@
         android:gravity="right"
         android:inputType="textPersonName"
         android:paddingTop="10pt"
+        android:text="0"
         android:textColor="@color/colorWhite"
-        android:textSize="40sp"
-        tools:text="0" />
+        android:textSize="40sp" />
 
     <TableLayout
 
