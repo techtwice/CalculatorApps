@@ -11,9 +11,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     private var btClickValue = ""
     private var op = ""
+    private var isOldNumberOp = true
     private var oldNumber = ""
     private var newNumber = ""
+    private var finalNumber: Double? = null
     private var isNewOp = true
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,54 +58,68 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (btSelect.id) {
             bt0.id -> {
                 btClickValue += "0"
+                if (!isOldNumberOp) newNumber += "0"
                 displayClickValue()
             }
             bt1.id -> {
                 btClickValue += "1"
+                if (!isOldNumberOp) newNumber += "1"
+
                 displayClickValue()
             }
             bt2.id -> {
                 btClickValue += "2"
+                if (!isOldNumberOp) newNumber += "2"
                 displayClickValue()
             }
             bt3.id -> {
                 btClickValue += "3"
+                if (!isOldNumberOp) newNumber += "3"
                 displayClickValue()
             }
             bt4.id -> {
                 btClickValue += "4"
+                if (!isOldNumberOp) newNumber += "4"
                 displayClickValue()
             }
             bt5.id -> {
                 btClickValue += "5"
+                if (!isOldNumberOp) newNumber += "5"
                 displayClickValue()
             }
             bt6.id -> {
                 btClickValue += "6"
+                if (!isOldNumberOp) newNumber += "6"
                 displayClickValue()
             }
             bt7.id -> {
                 btClickValue += "7"
+                if (!isOldNumberOp) newNumber += "7"
                 displayClickValue()
             }
             bt8.id -> {
                 btClickValue += "8"
+                if (!isOldNumberOp) newNumber += "8"
                 displayClickValue()
             }
             bt9.id -> {
                 btClickValue += "9"
+                if (!isOldNumberOp) newNumber += "9"
                 displayClickValue()
             }
             btDot.id -> {
                 //TODO: prevent adding more than 1 dot
                 btClickValue += "."
+                if (!isOldNumberOp) newNumber += "."
                 displayClickValue()
             }
             btPlusMins.id -> {
                 btClickValue = "-$btClickValue"
+                if (!isOldNumberOp) newNumber = "-$newNumber"
                 displayClickValue()
             }
             btMul.id -> {
+
                 op = "*"
                 operationEvent()
                 btClickValue += "*"
@@ -134,6 +151,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 val percentNumber: Double = etShowNumber.text.toString().toDouble() / 100
                 etShowNumber.setText(percentNumber.toString())
                 isNewOp = true
+                isOldNumberOp = true
+                newNumber = ""
                 return
             }
             btEqual.id -> {
@@ -149,18 +168,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun displayClickValue() {
+
         etShowNumber.setText(btClickValue)
+
     }
 
     private fun operationEvent() {
-        oldNumber = etShowNumber.text.toString()
-        //   isNewOp = true
+        if (finalNumber != null) {
+            oldNumber = finalNumber.toString()
+            btClickValue = oldNumber + btClickValue
+            finalNumber = null
+        } else {
+            oldNumber = etShowNumber.text.toString()
+        }
+
+        isOldNumberOp = false
         Toast.makeText(this, "oldNumber: $oldNumber", Toast.LENGTH_SHORT).show()
     }
 
     private fun equalEvent() {
-        newNumber = etShowNumber.text.toString()
-        var finalNumber: Double? = null
 
         when (op) {
 
@@ -174,18 +200,23 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 finalNumber = oldNumber.toDouble() + newNumber.toDouble()
             }
             "-" -> {
-                finalNumber = oldNumber.toDouble() * newNumber.toDouble()
+                finalNumber = oldNumber.toDouble() - newNumber.toDouble()
             }
         }
 
         etShowNumber.setText(finalNumber.toString())
+
         isNewOp = true
+        isOldNumberOp = true
+        newNumber = ""
     }
 
     private fun cleanShowNumber() {
         // Toast.makeText(this, "cleanShowNumber", Toast.LENGTH_SHORT).show()
         etShowNumber.setText("0")
         isNewOp = true
+        isOldNumberOp = true
+        newNumber = ""
     }
 
 }
