@@ -96,7 +96,10 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 op = "+"
             }
             btPercent.id -> {
-
+                val percentNumber: Double = etShowNumber.text.toString().toDouble() / 100
+                etShowNumber.setText(percentNumber.toString())
+                isNewOp = true
+                return
             }
             btEqual.id -> {
 
