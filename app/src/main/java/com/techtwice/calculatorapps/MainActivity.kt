@@ -174,7 +174,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun operationEvent() {
+
+        if (oldNumber != "" && newNumber != "") {
+            btClickValue = ""
+            equalEvent()
+        }
+
         if (finalNumber != null) {
+            etShowNumber.setText("")
+            Toast.makeText(this, "finalNumber != null", Toast.LENGTH_SHORT).show()
             oldNumber = finalNumber.toString()
             btClickValue = oldNumber + btClickValue
             finalNumber = null
@@ -184,6 +192,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
         isOldNumberOp = false
         Toast.makeText(this, "oldNumber: $oldNumber", Toast.LENGTH_SHORT).show()
+
     }
 
     private fun equalEvent() {
@@ -209,6 +218,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         isNewOp = true
         isOldNumberOp = true
         newNumber = ""
+
+        Toast.makeText(this, "finalNumber: $finalNumber", Toast.LENGTH_SHORT).show()
     }
 
     private fun cleanShowNumber() {
@@ -217,6 +228,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         isNewOp = true
         isOldNumberOp = true
         newNumber = ""
+        oldNumber = ""
+        finalNumber = null
     }
 
 }
