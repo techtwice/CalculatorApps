@@ -5,10 +5,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import kotlinx.android.synthetic.main.activity_main.*
+import android.widget.Toast as Toast
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     var op = ""
+    var oldNumber = ""
+    var isNewOp = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +36,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btPercent.setOnClickListener(this)
         btEqual.setOnClickListener(this)
         btClean.setOnClickListener(this)
-
 
 
     }
@@ -99,8 +101,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             btEqual.id -> {
 
             }
-            btClean.id -> {
-
+            R.id.btClean -> {
+                cleanShowNumber()
+                return
             }
 
         }
@@ -108,4 +111,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         etShowNumber.setText(btClickValue)
 
     }
+
+    private fun cleanShowNumber() {
+        Toast.makeText(this, "cleanShowNumber", Toast.LENGTH_SHORT).show()
+        etShowNumber.setText("0")
+        isNewOp = true
+    }
+
 }
